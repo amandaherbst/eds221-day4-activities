@@ -113,3 +113,24 @@ wave_height_range <- seq(from = 0, to = 3, by = 0.2)
 
 wave_power(wave_height_m = wave_height_range, period_s = 8)
 ```
+
+### Task 5
+
+Create a function that requires inputs of water depth, wave height and period, then returns the approximated wave power using the correct equation for the depth entered. It should also include a message (hint: use `message()` just like you would use warning!) that lets the user know if the shallow or deep water equation was used.
+
+```{r}
+wave_energy <- function(depth_m, wave_ht_m, period_sec) {
+  if (depth_m > 12) {
+    print(0.5 * (wave_ht_m ^ 2) * period_sec)
+    message("Using deep water equation")
+  }
+  if (depth_m <= 12) {
+    print(0.81 * (wave_ht_m ^ 2) * period_sec)
+    message("Using shallow water equation")
+  }
+}
+```
+
+```{r}
+wave_energy(depth_m = 20, wave_ht_m = 3, period_sec = 8)
+```
