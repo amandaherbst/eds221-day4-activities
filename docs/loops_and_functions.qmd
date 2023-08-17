@@ -40,3 +40,20 @@ for (i in seq_along(transects)) {
 ```{r}
 transect_days
 ```
+
+## Part 2. Functions introduced
+
+### Task 2
+
+Write a function called `force` that calculates a force (in Newtons), given inputs of mass (in kg) and acceleration (in ms2��2 (recall: F=ma�=��), and returns a statement \"The resulting force is \_\_\_ Newtons.\"
+
+```{r}
+force <- function(mass_kg, acceleration_ms2) {
+  calc_force <- mass_kg * acceleration_ms2
+  print(paste("The resulting force is", calc_force, "Newtons"))
+}
+```
+
+```{r}
+force(mass_kg = 2, acceleration_ms2 = 2)
+```
