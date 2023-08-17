@@ -4,12 +4,16 @@ format: html
 editor: visual
 ---
 
+```{r}
+library(tidyverse)
+```
+
 ## Part 1. For loops revisited
 
 ### Task 1
 
 \
-Create two sequences, one called `weekdays` that contains days of the week (\"Monday\", \"Tuesday\", \"Wednesday\", etc.) and one called `transects` that contains the series of transect names \"Transect A\", \"Transect B,\"Transect C\". Write a nested for loop that creates a matrix containing the following:
+Create two sequences, one called `weekdays` that contains days of the week ("Monday", "Tuesday", "Wednesday", etc.) and one called `transects` that contains the series of transect names "Transect A", "Transect B,"Transect C". Write a nested for loop that creates a matrix containing the following:
 
 |                        |                        |                        |
 |:-----------------------|:-----------------------|:-----------------------|
@@ -45,7 +49,7 @@ transect_days
 
 ### Task 2
 
-Write a function called `force` that calculates a force (in Newtons), given inputs of mass (in kg) and acceleration (in ms2��2 (recall: F=ma�=��), and returns a statement \"The resulting force is \_\_\_ Newtons.\"
+Write a function called `force` that calculates a force (in Newtons), given inputs of mass (in kg) and acceleration (in ms2��2 (recall: F=ma�=��), and returns a statement "The resulting force is \_\_\_ Newtons."
 
 ```{r}
 force <- function(mass_kg, acceleration_ms2) {
@@ -56,4 +60,56 @@ force <- function(mass_kg, acceleration_ms2) {
 
 ```{r}
 force(mass_kg = 2, acceleration_ms2 = 2)
+```
+
+### Task 3
+
+Recreate the table above as a data frame stored as `fish_parms`. Then, write a function called `fish_weight` that allows a user to only enter the *common name* (argument `fish_name`) and *total length* (argument `tot_length`) (in centimeters) of a fish, to return the expected fish weight in grams. Test it out for different species and lengths.
+
+```{r}
+fish_parms <- data.frame(sci_name = c("Chanos chanos", 
+                                      "Sphyraena barracuda", 
+                                      "Caranz ignobilis"),
+                         common_name = c("Milkfish", 
+                                         "Great barracuda", 
+                                         "Giant trevally"), 
+                         a_est = c(0.0905, 0.0181, 0.0353), 
+                         b_est = c(2.52, 3.27, 3.05))
+```
+
+```{r}
+fish_weight <- function(fish_name, tot_length_cm) {
+  name_subset <- filter(fish_parms, fish_name == common_name)
+  weight_g <- name_subset$a_est * (tot_length_cm ^ name_subset$b_est)
+}
+```
+
+```{r}
+fish_weight(fish_name = "Milkfish", tot_length_cm = 24)
+```
+
+Now, try creating a vector of lengths (e.g. 0 to 100, by increments of 1) and ensuring that your function will calculate the fish weight over a *range* of lengths for the given species (try this for milkfish, storing the output weights as `milkfish_weights`.
+
+```{r}
+milkfish_lengths <- seq(from = 0, to = 100, by = 1)
+
+milkfish_weights <- fish_weight(fish_name = "Milkfish", tot_length_cm = milkfish_lengths)
+```
+
+### Task 4
+
+Write a function called `wave_power` that calculates potential ocean wave power given inputs of wave height and period.
+
+```{r}
+wave_power <- function(wave_height_m, period_s) {
+  0.5 * (wave_height_m ^ 2) * period_s
+}
+```
+
+Use your `wave_power` function to approximate wave power for a period of 8 seconds, over a range of wave heights from 0 to 3 meters by increments of 0.2 meters.
+
+```{r}
+wave_height_range <- seq(from = 0, to = 3, by = 0.2)
+
+wave_power(wave_height_m = wave_height_range, period_s = 8)
 ```
